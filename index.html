@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>임당 경험 설문 | 임당연구소</title>
+  <meta name="description" content="임신성 당뇨 진단 후 경험을 들려주세요. 3분이면 됩니다.">
+  <meta property="og:title" content="임당 경험 설문 (3분)">
+  <meta property="og:description" content="임신성 당뇨 진단 후 가장 힘든 점을 알려주세요. 참여해주시면 스타벅스 기프티콘을 보내드려요 ☕">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #FF6B6B;
+      --primary-light: #FFF0F0;
+      --primary-dark: #E85555;
+      --bg: #FAFAFA;
+      --card: #FFFFFF;
+      --text: #191F28;
+      --text-secondary: #8B95A1;
+      --border: #E5E8EB;
+      --success: #20C997;
+      --success-light: #E6FCF5;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 48px 0 32px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .gift-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #FFF8E1 0%, #FFF0F0 100%);
+      border: 1px solid #FFE0B2;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 20px 0 32px;
+    }
+
+    .gift-banner .icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .gift-banner .text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* Progress */
+    .progress-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--card);
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .progress-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    /* Question Cards */
+    .question-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 28px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      display: none;
+    }
+
+    .question-card.active {
+      display: block;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-number {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .question-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      letter-spacing: -0.3px;
+    }
+
+    .question-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    /* Input Styles */
+    .text-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--bg);
+    }
+
+    .text-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    textarea.text-input {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    /* Radio Options */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option:active {
+      transform: scale(0.98);
+    }
+
+    .option.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .option input {
+      display: none;
+    }
+
+    .option .radio {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .option.selected .radio {
+      border-color: var(--primary);
+    }
+
+    .option.selected .radio::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    .option .label {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-primary:disabled {
+      background: #ddd;
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      flex: 0 0 auto;
+      padding: 15px 20px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.2s;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.97);
+    }
+
+    .btn-submit:disabled {
+      background: #ddd;
+      color: #999;
+    }
+
+    /* Completion */
+    .completion {
+      display: none;
+      text-align: center;
+      padding: 60px 20px 80px;
+    }
+
+    .completion.active {
+      display: block;
+      animation: slideUp 0.5s ease;
+    }
+
+    .completion .icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    .completion h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .completion p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .completion .insta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 0 48px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Response counter */
+    .response-count {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .response-count strong {
+      color: var(--primary);
+    }
+
+    /* Required star */
+    .required {
+      color: var(--primary);
+    }
+
+    /* Validation shake */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    .shake {
+      animation: shake 0.3s ease;
+    }
+
+    .error-msg {
+      font-size: 13px;
+      color: var(--primary);
+      margin-top: 8px;
+      display: none;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar" style="display:none;">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text" id="progressText">1 / 8</div>
+  </div>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="header" id="headerSection">
+      <div class="header-badge">🔬 임당연구소</div>
+      <h1>임당 진단 후<br>가장 힘든 점이<br>무엇인가요?</h1>
+      <p>3분이면 됩니다.<br>솔직한 경험을 들려주세요.</p>
+      
+      <div class="gift-banner">
+        <div class="icon">☕</div>
+        <div class="text">참여해주시면<br><strong>스타벅스 기프티콘</strong> 보내드려요!</div>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%; padding:16px;" onclick="startSurvey()">
+        설문 시작하기
+      </button>
+
+      <div class="response-count">
+        지금까지 <strong id="countNum">0</strong>명이 참여했어요
+      </div>
+    </div>
+
+    <!-- Questions -->
+    <form id="surveyForm" onsubmit="return false;">
+      
+      <!-- Q1 -->
+      <div class="question-card" id="q1">
+        <div class="question-number">Q1 <span class="required">*</span></div>
+        <div class="question-title">임당 진단 몇 주차에 받으셨나요?</div>
+        <div class="question-subtitle">해당하는 주차를 선택해주세요</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this, 'q1')">
+            <input type="radio" name="q1" value="24주 이전">
+            <div class="radio"></div>
+            <span class="label">24주 이전</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q1')">
+            <input type="radio" name="q1" value="24~26주">
+            <div class="radio"></div>
+            <span class="label">24~26주</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q1')">
+            <input type="radio" name="q1" value="27~28주">
+            <div class="radio"></div>
+            <span class="label">27~28주</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q1')">
+            <input type="radio" name="q1" value="29주 이후">
+            <div class="radio"></div>
+            <span class="label">29주 이후</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q1')">
+            <input type="radio" name="q1" value="출산 후에도 관리 중">
+            <div class="radio"></div>
+            <span class="label">출산 후에도 관리 중</span>
+          </label>
+        </div>
+        <div class="error-msg" id="q1-error">선택해주세요</div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" onclick="nextQuestion(1)">다음</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-card" id="q2">
+        <div class="question-number">Q2 <span class="required">*</span></div>
+        <div class="question-title">하루에 혈당 몇 번 재시나요?</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this, 'q2')">
+            <input type="radio" name="q2" value="안 잼">
+            <div class="radio"></div>
+            <span class="label">안 재요</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q2')">
+            <input type="radio" name="q2" value="1~2회">
+            <div class="radio"></div>
+            <span class="label">1~2회</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q2')">
+            <input type="radio" name="q2" value="3~4회">
+            <div class="radio"></div>
+            <span class="label">3~4회</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q2')">
+            <input type="radio" name="q2" value="5회 이상">
+            <div class="radio"></div>
+            <span class="label">5회 이상</span>
+          </label>
+        </div>
+        <div class="error-msg" id="q2-error">선택해주세요</div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="prevQuestion(2)">이전</button>
+          <button type="button" class="btn btn-primary" onclick="nextQuestion(2)">다음</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-card" id="q3">
+        <div class="question-number">Q3 <span class="required">*</span></div>
+        <div class="question-title">혈당 기록을 어떻게 하시나요?</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this, 'q3')">
+            <input type="radio" name="q3" value="종이/수첩">
+            <div class="radio"></div>
+            <span class="label">종이 / 수첩</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q3')">
+            <input type="radio" name="q3" value="메모장/엑셀">
+            <div class="radio"></div>
+            <span class="label">메모장 / 엑셀</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q3')">
+            <input type="radio" name="q3" value="앱 사용">
+            <div class="radio"></div>
+            <span class="label">앱 사용 중</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q3')">
+            <input type="radio" name="q3" value="사진으로 찍어둠">
+            <div class="radio"></div>
+            <span class="label">사진으로 찍어둠</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q3')">
+            <input type="radio" name="q3" value="안 함">
+            <div class="radio"></div>
+            <span class="label">따로 기록 안 해요</span>
+          </label>
+        </div>
+        <div class="error-msg" id="q3-error">선택해주세요</div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="prevQuestion(3)">이전</button>
+          <button type="button" class="btn btn-primary" onclick="nextQuestion(3)">다음</button>
+        </div>
+      </div>
+
+      <!-- Q4 — KEY QUESTION -->
+      <div class="question-card" id="q4">
+        <div class="question-number">Q4 <span class="required">*</span></div>
+        <div class="question-title">임당 후 가장 힘든 점<br>하나만 적어주세요</div>
+        <div class="question-subtitle">솔직하게 편하게 적어주세요. 이 답변이 가장 중요해요 🙏</div>
+        <textarea class="text-input" name="q4" id="q4-input" placeholder="예: 뭘 먹어야 할지 모르겠어요..."></textarea>
+        <div class="error-msg" id="q4-error">한 줄이라도 적어주세요 🙏</div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="prevQuestion(4)">이전</button>
+          <button type="button" class="btn btn-primary" onclick="nextQuestion(4)">다음</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-card" id="q5">
+        <div class="question-number">Q5 <span class="required">*</span></div>
+        <div class="question-title">음식 먹기 전에<br>"이거 먹어도 되나?" 검색해본 적 있나요?</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this, 'q5')">
+            <input type="radio" name="q5" value="매번 한다">
+            <div class="radio"></div>
+            <span class="label">거의 매번 검색해요</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q5')">
+            <input type="radio" name="q5" value="가끔 한다">
+            <div class="radio"></div>
+            <span class="label">가끔 해요</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q5')">
+            <input type="radio" name="q5" value="거의 안 한다">
+            <div class="radio"></div>
+            <span class="label">거의 안 해요</span>
+          </label>
+        </div>
+        <div class="error-msg" id="q5-error">선택해주세요</div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="prevQuestion(5)">이전</button>
+          <button type="button" class="btn btn-primary" onclick="nextQuestion(5)">다음</button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-card" id="q6">
+        <div class="question-number">Q6 <span class="required">*</span></div>
+        <div class="question-title">혈당 관리 도와주는 앱이 있다면<br>돈 내고 쓰실 의향이 있나요?</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this, 'q6')">
+            <input type="radio" name="q6" value="무료만">
+            <div class="radio"></div>
+            <span class="label">무료만 쓸 것 같아요</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q6')">
+            <input type="radio" name="q6" value="월 3,000원">
+            <div class="radio"></div>
+            <span class="label">월 3,000원 정도는 괜찮아요</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q6')">
+            <input type="radio" name="q6" value="월 5,000원">
+            <div class="radio"></div>
+            <span class="label">월 5,000원까지 가능해요</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q6')">
+            <input type="radio" name="q6" value="월 10,000원">
+            <div class="radio"></div>
+            <span class="label">월 10,000원도 괜찮아요</span>
+          </label>
+        </div>
+        <div class="error-msg" id="q6-error">선택해주세요</div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="prevQuestion(6)">이전</button>
+          <button type="button" class="btn btn-primary" onclick="nextQuestion(6)">다음</button>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question-card" id="q7">
+        <div class="question-number">Q7 <span class="required">*</span></div>
+        <div class="question-title">가장 원하는 기능<br>하나만 골라주세요</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this, 'q7')">
+            <input type="radio" name="q7" value="간편 혈당기록">
+            <div class="radio"></div>
+            <span class="label">📊 간편한 혈당 기록 & 그래프</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q7')">
+            <input type="radio" name="q7" value="음식별 혈당 검색">
+            <div class="radio"></div>
+            <span class="label">🍚 음식별 실제 혈당 반응 검색</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q7')">
+            <input type="radio" name="q7" value="AI 식단추천">
+            <div class="radio"></div>
+            <span class="label">🤖 AI 맞춤 식단 추천</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q7')">
+            <input type="radio" name="q7" value="병원제출 리포트">
+            <div class="radio"></div>
+            <span class="label">🏥 병원 제출용 리포트 자동 생성</span>
+          </label>
+          <label class="option" onclick="selectOption(this, 'q7')">
+            <input type="radio" name="q7" value="산모 커뮤니티">
+            <div class="radio"></div>
+            <span class="label">👩‍👩‍👧 같은 주수 산모 커뮤니티</span>
+          </label>
+        </div>
+        <div class="error-msg" id="q7-error">선택해주세요</div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="prevQuestion(7)">이전</button>
+          <button type="button" class="btn btn-primary" onclick="nextQuestion(7)">다음</button>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question-card" id="q8">
+        <div class="question-number">Q8</div>
+        <div class="question-title">기프티콘 받으실<br>연락처를 알려주세요 ☕</div>
+        <div class="question-subtitle">카카오톡 ID, 전화번호, 또는 인스타 계정</div>
+        <input type="text" class="text-input" name="q8" id="q8-input" placeholder="예: 카톡 ID 또는 010-0000-0000">
+        
+        <div style="margin-top: 20px;">
+          <div class="question-subtitle" style="margin-bottom: 10px;">임당 관리 정보 받아보실래요? (선택)</div>
+          <div class="options">
+            <label class="option" onclick="selectOption(this, 'q8_optin')">
+              <input type="radio" name="q8_optin" value="네">
+              <div class="radio"></div>
+              <span class="label">네, 유용한 정보 보내주세요!</span>
+            </label>
+            <label class="option" onclick="selectOption(this, 'q8_optin')">
+              <input type="radio" name="q8_optin" value="아니오">
+              <div class="radio"></div>
+              <span class="label">괜찮아요</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="prevQuestion(8)">이전</button>
+        </div>
+        <button type="button" class="btn-submit" onclick="submitSurvey()">설문 제출하기 ✨</button>
+      </div>
+
+    </form>
+
+    <!-- Completion -->
+    <div class="completion" id="completion">
+      <div class="icon">🎉</div>
+      <h2>감사합니다!</h2>
+      <p>
+        소중한 경험을 나눠주셔서<br>
+        정말 감사합니다.<br><br>
+        기프티콘은 영업일 1~2일 내<br>
+        보내드릴게요 ☕<br><br>
+        임당 관리에 도움 되는 정보를<br>
+        인스타에서 만나보세요!
+      </p>
+      <a href="https://instagram.com/imdang.lab" target="_blank" class="insta-link">
+        📸 임당연구소 팔로우하기
+      </a>
+    </div>
+
+    <div class="footer" id="footer">
+      임당연구소 · 임신성 당뇨 관리 연구
+    </div>
+  </div>
+
+  <!-- Google Sheets submission script -->
+  <script>
+    // Config
+    const TOTAL_QUESTIONS = 8;
+    let currentQuestion = 0;
+    const answers = {};
+
+    // Supabase config
+    const SUPABASE_URL = 'https://cavwhdccswjfkutvuqtf.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbG...NGbI';
+
+    function startSurvey() {
+      document.getElementById('headerSection').style.display = 'none';
+      document.getElementById('progressBar').style.display = 'block';
+      currentQuestion = 1;
+      showQuestion(1);
+      updateProgress();
+    }
+
+    function showQuestion(num) {
+      // Hide all
+      document.querySelectorAll('.question-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      // Show target
+      const target = document.getElementById('q' + num);
+      if (target) {
+        target.classList.add('active');
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function updateProgress() {
+      const pct = (currentQuestion / TOTAL_QUESTIONS) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = currentQuestion + ' / ' + TOTAL_QUESTIONS;
+    }
+
+    function selectOption(el, questionId) {
+      // Deselect siblings
+      el.closest('.options').querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      // Select this
+      el.classList.add('selected');
+      el.querySelector('input').checked = true;
+      
+      // Store answer
+      answers[questionId] = el.querySelector('input').value;
+      
+      // Hide error
+      const errEl = document.getElementById(questionId + '-error');
+      if (errEl) errEl.classList.remove('show');
+    }
+
+    function validateQuestion(num) {
+      const qId = 'q' + num;
+      
+      if (num === 4) {
+        // Textarea
+        const val = document.getElementById('q4-input').value.trim();
+        if (!val) {
+          document.getElementById('q4-error').classList.add('show');
+          document.getElementById('q4').classList.add('shake');
+          setTimeout(() => document.getElementById('q4').classList.remove('shake'), 400);
+          return false;
+        }
+        answers['q4'] = val;
+        return true;
+      }
+      
+      if (num === 8) {
+        // Contact — optional
+        answers['q8'] = document.getElementById('q8-input').value.trim();
+        const optIn = document.querySelector('input[name="q8_optin"]:checked');
+        answers['q8_optin'] = optIn ? optIn.value : '';
+        return true;
+      }
+      
+      // Radio questions
+      const selected = document.querySelector('input[name="' + qId + '"]:checked');
+      if (!selected) {
+        const errEl = document.getElementById(qId + '-error');
+        if (errEl) errEl.classList.add('show');
+        document.getElementById(qId).classList.add('shake');
+        setTimeout(() => document.getElementById(qId).classList.remove('shake'), 400);
+        return false;
+      }
+      
+      answers[qId] = selected.value;
+      return true;
+    }
+
+    function nextQuestion(from) {
+      if (!validateQuestion(from)) return;
+      
+      currentQuestion = from + 1;
+      showQuestion(currentQuestion);
+      updateProgress();
+    }
+
+    function prevQuestion(from) {
+      currentQuestion = from - 1;
+      if (currentQuestion < 1) currentQuestion = 1;
+      showQuestion(currentQuestion);
+      updateProgress();
+    }
+
+    async function submitSurvey() {
+      if (!validateQuestion(8)) return;
+      
+      const submitBtn = document.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '제출 중...';
+
+      const data = {
+        timestamp: new Date().toISOString(),
+        q1_진단주차: answers['q1'] || '',
+        q2_측정횟수: answers['q2'] || '',
+        q3_기록방식: answers['q3'] || '',
+        q4_가장힘든점: answers['q4'] || '',
+        q5_음식검색: answers['q5'] || '',
+        q6_지불의향: answers['q6'] || '',
+        q7_원하는기능: answers['q7'] || '',
+        q8_연락처: answers['q8'] || '',
+        q8_정보수신: answers['q8_optin'] || '',
+      };
+
+      // Save to Supabase
+      const supaData = {
+        q1_diagnosis_week: data.q1_진단주차,
+        q2_measure_count: data.q2_측정횟수,
+        q3_record_method: data.q3_기록방식,
+        q4_hardest_thing: data.q4_가장힘든점,
+        q5_food_search: data.q5_음식검색,
+        q6_willingness_to_pay: data.q6_지불의향,
+        q7_wanted_feature: data.q7_원하는기능,
+        q8_contact: data.q8_연락처,
+        q8_optin: data.q8_정보수신,
+      };
+
+      try {
+        const res = await fetch(SUPABASE_URL + '/rest/v1/imdang_survey', {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal',
+          },
+          body: JSON.stringify(supaData),
+        });
+        if (!res.ok) throw new Error('Save failed');
+      } catch (e) {
+        console.log('Supabase save failed, using localStorage fallback');
+      }
+
+      // Also save to localStorage as backup
+      const saved = JSON.parse(localStorage.getItem('survey_responses') || '[]');
+      saved.push(data);
+      localStorage.setItem('survey_responses', JSON.stringify(saved));
+
+      // Show completion
+      document.getElementById('surveyForm').style.display = 'none';
+      document.getElementById('progressBar').style.display = 'none';
+      document.getElementById('completion').classList.add('active');
+
+      // Update count
+      updateResponseCount();
+    }
+
+    function updateResponseCount() {
+      // Get count from Supabase
+      fetch(SUPABASE_URL + '/rest/v1/imdang_survey?select=id', {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY, 'Prefer': 'count=exact', 'Range': '0-0' },
+      }).then(res => {
+        const count = res.headers.get('content-range');
+        if (count) {
+          const total = count.split('/')[1];
+          if (total && total !== '*') {
+            document.getElementById('countNum').textContent = Math.max(0, parseInt(total) - 1); // subtract test entry
+          }
+        }
+      }).catch(() => {});
+    }
+
+    // Admin: view responses (press 'A' 3 times)
+    let adminClicks = 0;
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'a' || e.key === 'A') {
+        adminClicks++;
+        if (adminClicks >= 3) {
+          adminClicks = 0;
+          const saved = JSON.parse(localStorage.getItem('survey_responses') || '[]');
+          console.table(saved);
+          alert('콘솔에서 응답을 확인하세요. 총 ' + saved.length + '개');
+        }
+      } else {
+        adminClicks = 0;
+      }
+    });
+
+    // Init
+    updateResponseCount();
+  </script>
+</body>
+</html>
