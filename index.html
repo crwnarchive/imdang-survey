@@ -63,26 +63,29 @@
     .header h1 {
       font-size: 26px;
       font-weight: 700;
-      line-height: 1.35;
-      margin-bottom: 12px;
+      line-height: 1.4;
+      margin-bottom: 16px;
       letter-spacing: -0.5px;
+      word-break: keep-all;
     }
 
     .header p {
       font-size: 15px;
       color: var(--text-secondary);
-      line-height: 1.6;
+      line-height: 1.7;
+      word-break: keep-all;
     }
 
     .gift-banner {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       background: linear-gradient(135deg, #FFF8E1 0%, #FFF0F0 100%);
       border: 1px solid #FFE0B2;
       border-radius: 12px;
-      padding: 14px 16px;
-      margin: 20px 0 32px;
+      padding: 16px 20px;
+      margin: 24px 0 32px;
     }
 
     .gift-banner .icon {
@@ -94,6 +97,7 @@
       font-size: 14px;
       font-weight: 500;
       color: var(--text);
+      line-height: 1.5;
     }
 
     /* Progress */
@@ -132,7 +136,7 @@
     .question-card {
       background: var(--card);
       border-radius: 16px;
-      padding: 28px 24px;
+      padding: 32px 24px;
       margin-bottom: 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       border: 1px solid var(--border);
@@ -153,21 +157,26 @@
       font-size: 13px;
       font-weight: 600;
       color: var(--primary);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      text-align: center;
     }
 
     .question-title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
-      margin-bottom: 6px;
-      line-height: 1.4;
+      margin-bottom: 8px;
+      line-height: 1.45;
       letter-spacing: -0.3px;
+      text-align: center;
+      word-break: keep-all;
     }
 
     .question-subtitle {
       font-size: 13px;
       color: var(--text-secondary);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      text-align: center;
+      line-height: 1.5;
     }
 
     /* Input Styles */
@@ -198,7 +207,7 @@
     .options {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .option {
@@ -260,7 +269,7 @@
     .btn-group {
       display: flex;
       gap: 10px;
-      margin-top: 24px;
+      margin-top: 28px;
     }
 
     .btn {
@@ -354,7 +363,8 @@
     .completion p {
       font-size: 15px;
       color: var(--text-secondary);
-      line-height: 1.7;
+      line-height: 1.8;
+      word-break: keep-all;
     }
 
     .completion .insta-link {
@@ -382,7 +392,7 @@
     /* Response counter */
     .response-count {
       text-align: center;
-      margin-top: 12px;
+      margin-top: 16px;
       font-size: 13px;
       color: var(--text-secondary);
     }
@@ -412,6 +422,7 @@
       color: var(--primary);
       margin-top: 8px;
       display: none;
+      text-align: center;
     }
 
     .error-msg.show {
